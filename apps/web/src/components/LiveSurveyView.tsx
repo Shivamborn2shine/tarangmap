@@ -111,7 +111,7 @@ export function LiveSurveyView({
       }
     };
     poll();
-    const interval = setInterval(poll, 4500);
+    const interval = setInterval(poll, 2500);
     return () => {
       active = false;
       clearInterval(interval);
@@ -198,7 +198,9 @@ export function LiveSurveyView({
           <div>
             <div className="flex items-center gap-2.5">
               <SignalBadge tier={currentTier} size="lg" />
-              <span className="text-xs text-[#627D98]">updated {freshSeconds}s ago</span>
+              <span className="text-xs text-[#627D98]">
+                {client.conn.hasWindowsCollector ? 'Live Windows WLAN' : 'Demo Simulation'} • updated {freshSeconds}s ago
+              </span>
             </div>
             <div className="tabular-nums mt-3 text-3xl font-bold tracking-tight text-[#102A43]">
               {primaryText}

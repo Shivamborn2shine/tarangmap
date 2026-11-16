@@ -142,7 +142,9 @@ export class TarangClient {
 
   async getWindowsLiveScan(includeNearby = false): Promise<{ interface: WindowsLiveScan; nearby_networks: any[] } | null> {
     if (!this.conn.hasWindowsCollector) return null;
-    const r = await fetch(`${this.conn.baseUrl}/api/v1/windows/live-scan?include_nearby=${includeNearby}`);
+    const r = await fetch(`${this.conn.baseUrl}/api/v1/windows/live-scan?include_nearby=${includeNearby}`, {
+      cache: 'no-store',
+    });
     return r.ok ? r.json() : null;
   }
 
