@@ -180,6 +180,171 @@ def make_signal_chart():
     img.save(OUT_DIR / "fig_signal_chart.png")
 
 
+def make_band_comparison():
+    img = Image.new("RGB", (1200, 500), BG)
+    d = ImageDraw.Draw(img)
+    d.text((40, 24), "Figure 7.2: 2.4 GHz (Windows Laptop) vs 5 GHz (Android) Propagation by Room", fill=NAVY, font=_font(24, True))
+
+    rooms = [
+        ("Living Room", -48, -44),
+        ("Study", -56, -61),
+        ("Hallway", -61, -64),
+        ("Master Bed", -68, -75),
+        ("Balcony", -73, -82),
+    ]
+    base_y = 410
+    x = 95
+    for name, r24, r5 in rooms:
+        h24 = max(30, int((100 + r24) * 4.8))
+        h5 = max(30, int((100 + r5) * 4.8))
+        d.rounded_rectangle([x, base_y - h24, x + 55, base_y], radius=6, fill=TEAL)
+        d.rounded_rectangle([x + 65, base_y - h5, x + 120, base_y], radius=6, fill=BLUE)
+        d.text((x + 2, base_y - h24 - 24), f"{r24}", fill=TEAL, font=_font(15, True))
+        d.text((x + 67, base_y - h5 - 24), f"{r5}", fill=BLUE, font=_font(15, True))
+        d.text((x + 8, base_y + 12), name, fill=NAVY, font=_font(16, False))
+        x += 210
+
+    d.line([(60, base_y), (1140, base_y)], fill=NAVY, width=2)
+    d.text((80, 455), "Teal = 2.4 GHz (better wall penetration)   |   Blue = 5 GHz (higher peak throughput, steeper attenuation)", fill=MUTED, font=_font(16, True))
+    img.save(OUT_DIR / "fig_band_comparison.png")
+
+
+def make_test_breakdown():
+    img = Image.new("RGB", (1200, 460), BG)
+    d = ImageDraw.Draw(img)
+    d.text((40, 24), "Figure 7.3: Automated Verification & Build Checks (100% Passing)", fill=NAVY, font=_font(24, True))
+
+    checks = [
+        ("Pytest API Suite (3/3)", 100, GREEN, 110),
+        ("TypeScript & Vite Build", 100, TEAL, 190),
+        ("Windows netsh Probe", 100, BLUE, 270),
+        ("Hybrid Bridge (127.0.0.1:8765)", 100, GREEN, 350),
+    ]
+    for label, pct, col, y in checks:
+        d.text((50, y + 8), label, fill=NAVY, font=_font(18, True))
+        d.rounded_rectangle([420, y, 1080, y + 40], radius=10, fill="#E2E8F0")
+        d.rounded_rectangle([420, y, 1080, y + 40], radius=10, fill=col)
+        d.text((1095, y + 8), f"{pct}%", fill=NAVY, font=_font(18, True))
+
+    img.save(OUT_DIR / "fig_test_breakdown.png")
+
+
+def make_phy_vs_isp():
+    img = Image.new("RGB", (1200, 500), BG)
+    d = ImageDraw.Draw(img)
+    d.text((40, 24), "Figure 4.2: Why Wi-Fi PHY Link Rate (144.4 Mbps) != Internet Speed (29.84 Mbps)", fill=NAVY, font=_font(23, True))
+
+    _box(d, (50, 130, 340, 290), "Laptop (MT7921)", "Wi-Fi 802.11n 2.4 GHz\nRSSI: -61 dBm | Qual: 77%", TEAL)
+    _box(d, (460, 130, 740, 290), "Home Wi-Fi Router", "Local Radio Link:\n144.4 Mbps PHY Rate", BLUE)
+    _box(d, (860, 130, 1150, 290), "ISP / Internet", "Actual Speedtest:\n29.84 Mbps (Plan/Backhaul)", GREEN)
+
+    _arrow(d, (340, 210), (460, 210), "144.4 Mbps")
+    _arrow(d, (740, 210), (860, 210), "29.84 Mbps")
+
+    d.rounded_rectangle([50, 350, 1150, 440], radius=12, fill="#EAF2FC", outline=BLUE, width=2)
+    d.text((75, 378), "Key Insight: netsh wlan reports local Router <-> Laptop PHY link rate. TARANG's opt-in Speed Test measures end-to-end ISP throughput.", fill=NAVY, font=_font(16, True))
+    img.save(OUT_DIR / "fig_phy_vs_isp.png")
+
+
+def make_idempotent_sync():
+    img = Image.new("RGB", (1200, 500), BG)
+    d = ImageDraw.Draw(img)
+    d.text((40, 24), "Figure 4.3: Offline SQLite Queue & Idempotent Batch Sync Flow", fill=NAVY, font=_font(24, True))
+
+    _box(d, (40, 130, 290, 290), "1. Capture + UUIDv4", "Assign unique obs_id\nSave to SQLite Queue", TEAL)
+    _box(d, (350, 130, 620, 290), "2. POST /batch", "Send <= 500 items\nNetwork drop? Retry safe", BLUE)
+    _box(d, (680, 90, 930, 210), "New obs_id -> Insert", "status: 'accepted'\nRemove from queue", GREEN)
+    _box(d, (680, 240, 930, 360), "Existing obs_id -> Skip", "status: 'duplicate'\nZero DB duplicates", AMBER)
+    _box(d, (980, 165, 1170, 295), "3. Synced", "Queue = 0\nAudit in sync_batches", NAVY)
+
+    _arrow(d, (290, 210), (350, 210))
+    _arrow(d, (620, 190), (680, 150))
+    _arrow(d, (620, 230), (680, 300))
+    _arrow(d, (930, 150), (980, 210))
+    _arrow(d, (930, 300), (980, 250))
+
+    img.save(OUT_DIR / "fig_idempotent_sync.png")
+
+
+def make_signal_tiers_scale():
+    img = Image.new("RGB", (1200, 520), BG)
+    d = ImageDraw.Draw(img)
+    d.text((40, 24), "Figure 4.4: Radio-Specific Signal Tier Scales (Never Mixed)", fill=NAVY, font=_font(24, True))
+
+    rows = [
+        ("Wi-Fi RSSI (dBm)", [">= -55", "-56 to -67", "-68 to -75", "< -75"], 110),
+        ("Windows Quality (%)", [">= 80%", "60% - 79%", "40% - 59%", "< 40%"], 210),
+        ("LTE RSRP (dBm)", [">= -85", "-86 to -98", "-99 to -110", "< -110"], 310),
+        ("5G NR SS-RSRP (dBm)", [">= -85", "-86 to -98", "-99 to -110", "< -110"], 410),
+    ]
+    colors = [GREEN, BLUE, AMBER, CORAL]
+    tiers = ["Strong", "Good", "Fair", "Weak"]
+
+    for label, vals, y in rows:
+        d.text((40, y + 18), label, fill=NAVY, font=_font(17, True))
+        x = 310
+        for val, col, tier in zip(vals, colors, tiers):
+            d.rounded_rectangle([x, y, x + 195, y + 60], radius=10, fill=col)
+            d.text((x + 16, y + 10), tier, fill="#FFFFFF", font=_font(16, True))
+            d.text((x + 16, y + 34), val, fill="#FFFFFF", font=_font(15, False))
+            x += 210
+
+    img.save(OUT_DIR / "fig_signal_tiers_scale.png")
+
+
+def make_stride_diagram():
+    img = Image.new("RGB", (1200, 540), BG)
+    d = ImageDraw.Draw(img)
+    d.text((40, 24), "Figure 7.4: STRIDE CyberSecurity Threat Model & TARANG Defense Layers", fill=NAVY, font=_font(24, True))
+
+    items = [
+        ("S — Spoofing", "Random UUIDv4 device IDs\nCapability registration", TEAL, 50, 100),
+        ("T — Tampering", "Pydantic v2 validation\nIdempotent UUID dedup", BLUE, 425, 100),
+        ("R — Repudiation", "observed_at / recorded_at\nmetric_source audit", NAVY, 800, 100),
+        ("I — Info Disclosure", "Project-salted BSSID hash\nredact=true CSV/JSON", GREEN, 50, 300),
+        ("D — Denial of Service", "500-item batch limit\nOpt-in timed speed test", AMBER, 425, 300),
+        ("E — Elevation", "Loopback 127.0.0.1:8765\nNo root / no sniffing", CORAL, 800, 300),
+    ]
+    for title, sub, col, x, y in items:
+        _box(d, (x, y, x + 340, y + 150), title, sub, col)
+
+    img.save(OUT_DIR / "fig_stride_matrix.png")
+
+
+def make_ux_wireflow():
+    img = Image.new("RGB", (1200, 480), BG)
+    d = ImageDraw.Draw(img)
+    d.text((40, 24), "Figure 6.8: Comfort-First UX Wireflow (<= 2 Taps to Start Survey)", fill=NAVY, font=_font(24, True))
+
+    _box(d, (40, 130, 290, 300), "1. Overview Home", "Big 'Start Survey' CTA\nLaptop Collector Card", TEAL)
+    _box(d, (330, 130, 580, 300), "2. 3-Step Wizard", "Indoor / Outdoor\nWi-Fi / Cell / Room", BLUE)
+    _box(d, (620, 130, 880, 300), "3. Live Survey", "Hero Signal + Freshness\nTap Floor Plan + Undo", GREEN)
+    _box(d, (920, 130, 1160, 300), "4. Map & Insights", "Measured Points / List\nRules A-E + Export", NAVY)
+
+    _arrow(d, (290, 215), (330, 215))
+    _arrow(d, (580, 215), (620, 215))
+    _arrow(d, (880, 215), (920, 215))
+
+    d.text((40, 370), "Ergonomics: 48px sticky thumb-zone controls on mobile; tabular numerals; color never communicates signal alone.", fill=MUTED, font=_font(16, True))
+    img.save(OUT_DIR / "fig_ux_wireflow.png")
+
+
+def make_privacy_pipeline():
+    img = Image.new("RGB", (1200, 480), BG)
+    d = ImageDraw.Draw(img)
+    d.text((40, 24), "Figure 7.5: Privacy-by-Default Telemetry Redaction & BSSID Hashing Pipeline", fill=NAVY, font=_font(24, True))
+
+    _box(d, (40, 130, 350, 300), "Raw Radio Capture", "SSID: Airtel_suna_6489\nBSSID: b4:86:18:...\nGPS: 28.6139, 77.2090", CORAL)
+    _box(d, (430, 130, 760, 300), "Local Privacy Transform", "SHA-256(project_id + BSSID)\nNo IMEI / No Phone #\nLoopback-only storage", TEAL)
+    _box(d, (840, 130, 1160, 300), "Redacted Export (CSV/JSON)", "SSID: [REDACTED]\nbssid_hash: 1dc71802...\nGPS: null (when redact=true)", GREEN)
+
+    _arrow(d, (350, 215), (430, 215))
+    _arrow(d, (760, 215), (840, 215))
+
+    d.text((40, 370), "Result: Researchers can share signal-quality datasets publicly without exposing home Wi-Fi names or exact coordinates.", fill=MUTED, font=_font(16, True))
+    img.save(OUT_DIR / "fig_privacy_pipeline.png")
+
+
 if __name__ == "__main__":
     make_architecture()
     make_dfd()
@@ -187,4 +352,12 @@ if __name__ == "__main__":
     make_sequence()
     make_rules_pipeline()
     make_signal_chart()
-    print("Generated all technical diagrams in", OUT_DIR)
+    make_band_comparison()
+    make_test_breakdown()
+    make_phy_vs_isp()
+    make_idempotent_sync()
+    make_signal_tiers_scale()
+    make_stride_diagram()
+    make_ux_wireflow()
+    make_privacy_pipeline()
+    print("Generated all 14 technical diagrams in", OUT_DIR)

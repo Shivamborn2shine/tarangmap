@@ -8,7 +8,7 @@ from docx.shared import Inches, Pt, RGBColor
 
 ROOT = Path(__file__).resolve().parent.parent
 FIG_DIR = ROOT / "docs" / "report_figures"
-OUT_PATH = ROOT / "docs" / "TARANG_Project_Report_Shivam_Kumar_40p.docx"
+OUT_PATH = ROOT / "docs" / "TARANG_Project_Report_Shivam_Kumar_Visual_40p.docx"
 
 NAVY = RGBColor(0x10, 0x2A, 0x43)
 TEAL = RGBColor(0x08, 0x7F, 0x8C)
@@ -181,6 +181,20 @@ def build_report():
             ["Source Repository", "https://github.com/Shivamborn2shine/tarangmap"],
         ],
     )
+    add_heading(doc, "LIST OF TABLES", level=2)
+    for tbl_lbl in [
+        "Table 1.1: Candidate & Academic Submission Metadata",
+        "Table 1.2: Software and Hardware Requirements",
+        "Table 2.1: Existing Commercial Tools vs TARANG Hybrid System",
+        "Table 2.2: Functional Requirements Matrix (FR-01 to FR-06)",
+        "Table 3.1: Package & Module Responsibility Matrix",
+        "Table 5.1: REST API v1 & Windows Localhost Bridge Endpoints",
+        "Table 6.1: Responsive Viewport & Interaction Budget Specification",
+        "Table 7.1: Automated Verification & Build Test Results",
+        "Table 7.2: STRIDE CyberSecurity Threat & Control Matrix",
+        "Table A.1: Radio-Specific Signal Tier Thresholds Reference",
+    ]:
+        add_bullet(doc, tbl_lbl)
     doc.add_page_break()
 
     # ---------------- CANDIDATE DECLARATION ----------------
@@ -203,6 +217,20 @@ def build_report():
         "were generated directly from the implemented TARANG repository."
     )
     doc.add_paragraph("\nCandidate Signature: ________________________\nName: Shivam Kumar (Roll No. 2105130)")
+    add_heading(doc, "LIST OF TABLES", level=2)
+    for tbl_lbl in [
+        "Table 1.1: Candidate & Academic Submission Metadata",
+        "Table 1.2: Software and Hardware Requirements",
+        "Table 2.1: Existing Commercial Tools vs TARANG Hybrid System",
+        "Table 2.2: Functional Requirements Matrix (FR-01 to FR-06)",
+        "Table 3.1: Package & Module Responsibility Matrix",
+        "Table 5.1: REST API v1 & Windows Localhost Bridge Endpoints",
+        "Table 6.1: Responsive Viewport & Interaction Budget Specification",
+        "Table 7.1: Automated Verification & Build Test Results",
+        "Table 7.2: STRIDE CyberSecurity Threat & Control Matrix",
+        "Table A.1: Radio-Specific Signal Tier Thresholds Reference",
+    ]:
+        add_bullet(doc, tbl_lbl)
     doc.add_page_break()
 
     # ---------------- ACKNOWLEDGEMENT ----------------
@@ -220,6 +248,20 @@ def build_report():
         "Engineering, Graphic Era Deemed to be University, for providing the academic environment "
         "and resources required to complete this hybrid networking and cybersecurity-aware project."
     )
+    add_heading(doc, "LIST OF TABLES", level=2)
+    for tbl_lbl in [
+        "Table 1.1: Candidate & Academic Submission Metadata",
+        "Table 1.2: Software and Hardware Requirements",
+        "Table 2.1: Existing Commercial Tools vs TARANG Hybrid System",
+        "Table 2.2: Functional Requirements Matrix (FR-01 to FR-06)",
+        "Table 3.1: Package & Module Responsibility Matrix",
+        "Table 5.1: REST API v1 & Windows Localhost Bridge Endpoints",
+        "Table 6.1: Responsive Viewport & Interaction Budget Specification",
+        "Table 7.1: Automated Verification & Build Test Results",
+        "Table 7.2: STRIDE CyberSecurity Threat & Control Matrix",
+        "Table A.1: Radio-Specific Signal Tier Thresholds Reference",
+    ]:
+        add_bullet(doc, tbl_lbl)
     doc.add_page_break()
 
     # ---------------- ABSTRACT ----------------
@@ -243,6 +285,20 @@ def build_report():
         "forging indoor GPS precision), and a deterministic rules-based engine (Rules A–E) that "
         "translates raw RF observations into verifiable optimization tests."
     )
+    add_heading(doc, "LIST OF TABLES", level=2)
+    for tbl_lbl in [
+        "Table 1.1: Candidate & Academic Submission Metadata",
+        "Table 1.2: Software and Hardware Requirements",
+        "Table 2.1: Existing Commercial Tools vs TARANG Hybrid System",
+        "Table 2.2: Functional Requirements Matrix (FR-01 to FR-06)",
+        "Table 3.1: Package & Module Responsibility Matrix",
+        "Table 5.1: REST API v1 & Windows Localhost Bridge Endpoints",
+        "Table 6.1: Responsive Viewport & Interaction Budget Specification",
+        "Table 7.1: Automated Verification & Build Test Results",
+        "Table 7.2: STRIDE CyberSecurity Threat & Control Matrix",
+        "Table A.1: Radio-Specific Signal Tier Thresholds Reference",
+    ]:
+        add_bullet(doc, tbl_lbl)
     doc.add_page_break()
 
     # ---------------- TABLE OF CONTENTS, FIGURES, TABLES ----------------
@@ -276,6 +332,20 @@ def build_report():
         "Figure 7.3: Automated Verification & Build Checks (100% Passing)",
     ]:
         add_bullet(doc, fig_lbl)
+    add_heading(doc, "LIST OF TABLES", level=2)
+    for tbl_lbl in [
+        "Table 1.1: Candidate & Academic Submission Metadata",
+        "Table 1.2: Software and Hardware Requirements",
+        "Table 2.1: Existing Commercial Tools vs TARANG Hybrid System",
+        "Table 2.2: Functional Requirements Matrix (FR-01 to FR-06)",
+        "Table 3.1: Package & Module Responsibility Matrix",
+        "Table 5.1: REST API v1 & Windows Localhost Bridge Endpoints",
+        "Table 6.1: Responsive Viewport & Interaction Budget Specification",
+        "Table 7.1: Automated Verification & Build Test Results",
+        "Table 7.2: STRIDE CyberSecurity Threat & Control Matrix",
+        "Table A.1: Radio-Specific Signal Tier Thresholds Reference",
+    ]:
+        add_bullet(doc, tbl_lbl)
     doc.add_page_break()
 
     # ---------------- CHAPTER 1 ----------------
@@ -349,6 +419,20 @@ def build_report():
             ["Cloud Hosting", "Vercel (vercel.json) and Netlify (netlify.toml) for static SPA hosting"],
         ],
     )
+    add_heading(doc, "LIST OF TABLES", level=2)
+    for tbl_lbl in [
+        "Table 1.1: Candidate & Academic Submission Metadata",
+        "Table 1.2: Software and Hardware Requirements",
+        "Table 2.1: Existing Commercial Tools vs TARANG Hybrid System",
+        "Table 2.2: Functional Requirements Matrix (FR-01 to FR-06)",
+        "Table 3.1: Package & Module Responsibility Matrix",
+        "Table 5.1: REST API v1 & Windows Localhost Bridge Endpoints",
+        "Table 6.1: Responsive Viewport & Interaction Budget Specification",
+        "Table 7.1: Automated Verification & Build Test Results",
+        "Table 7.2: STRIDE CyberSecurity Threat & Control Matrix",
+        "Table A.1: Radio-Specific Signal Tier Thresholds Reference",
+    ]:
+        add_bullet(doc, tbl_lbl)
     doc.add_page_break()
 
     # ---------------- CHAPTER 2 ----------------
@@ -391,6 +475,20 @@ def build_report():
 
     add_heading(doc, "2.4 Data Flow Diagrams", level=2)
     add_figure(doc, FIG_DIR / "fig_dfd.png", "Figure 2.1: Level 0 & Level 1 Data Flow — Radio Collection to Insights.")
+    add_heading(doc, "LIST OF TABLES", level=2)
+    for tbl_lbl in [
+        "Table 1.1: Candidate & Academic Submission Metadata",
+        "Table 1.2: Software and Hardware Requirements",
+        "Table 2.1: Existing Commercial Tools vs TARANG Hybrid System",
+        "Table 2.2: Functional Requirements Matrix (FR-01 to FR-06)",
+        "Table 3.1: Package & Module Responsibility Matrix",
+        "Table 5.1: REST API v1 & Windows Localhost Bridge Endpoints",
+        "Table 6.1: Responsive Viewport & Interaction Budget Specification",
+        "Table 7.1: Automated Verification & Build Test Results",
+        "Table 7.2: STRIDE CyberSecurity Threat & Control Matrix",
+        "Table A.1: Radio-Specific Signal Tier Thresholds Reference",
+    ]:
+        add_bullet(doc, tbl_lbl)
     doc.add_page_break()
 
     # ---------------- CHAPTER 3 ----------------
@@ -406,6 +504,7 @@ def build_report():
         "to the local laptop collector if running, or operate in Local-First Demo Mode."
     )
     add_figure(doc, FIG_DIR / "fig_architecture.png", "Figure 3.1: TARANG Hybrid Local-First System Architecture.")
+    doc.add_page_break()
 
     add_heading(doc, "3.2 Canonical Database Schema & ER Design", level=2)
     add_body(
@@ -417,12 +516,20 @@ def build_report():
         "metrics live in `wifi_observations`, `cell_observations`, and `active_tests`."
     )
     add_figure(doc, FIG_DIR / "fig_er_schema.png", "Figure 3.2: Canonical Relational & Geospatial Database Schema (v1).")
+    doc.add_page_break()
 
-    add_heading(doc, "3.3 SQLAlchemy ORM Models (services/api/app/models.py)", level=2)
+    add_heading(doc, "3.3 Core Relational Entities Summary", level=2)
+    add_body(
+        doc,
+        "Instead of duplicating metadata across technologies, TARANG splits each observation into "
+        "a shared base record (timestamps, freshness, source, indoor/outdoor location) and a "
+        "technology-specific detail record (`wifi_observations`, `cell_observations`, or `active_tests`). "
+        "This ensures unknown or unsupported fields remain explicitly `null` with a `missing_reason`."
+    )
     add_code_block(
         doc,
-        "Excerpt 3.1: services/api/app/models.py — Core Observation & WifiObservation Models",
-        read_snippet("services/api/app/models.py", 75, 130),
+        "Excerpt 3.1: services/api/app/models.py — Observation Base & WifiObservation Link",
+        read_snippet("services/api/app/models.py", 75, 97),
     )
 
     add_heading(doc, "3.4 Package & Module Responsibility Matrix", level=2)
@@ -442,6 +549,20 @@ def build_report():
             ["apps/android/.../RadioCapabilityProbe.kt", "Permission-aware Android WifiManager & TelephonyManager probe"],
         ],
     )
+    add_heading(doc, "LIST OF TABLES", level=2)
+    for tbl_lbl in [
+        "Table 1.1: Candidate & Academic Submission Metadata",
+        "Table 1.2: Software and Hardware Requirements",
+        "Table 2.1: Existing Commercial Tools vs TARANG Hybrid System",
+        "Table 2.2: Functional Requirements Matrix (FR-01 to FR-06)",
+        "Table 3.1: Package & Module Responsibility Matrix",
+        "Table 5.1: REST API v1 & Windows Localhost Bridge Endpoints",
+        "Table 6.1: Responsive Viewport & Interaction Budget Specification",
+        "Table 7.1: Automated Verification & Build Test Results",
+        "Table 7.2: STRIDE CyberSecurity Threat & Control Matrix",
+        "Table A.1: Radio-Specific Signal Tier Thresholds Reference",
+    ]:
+        add_bullet(doc, tbl_lbl)
     doc.add_page_break()
 
     # ---------------- CHAPTER 4 ----------------
@@ -457,8 +578,8 @@ def build_report():
     )
     add_code_block(
         doc,
-        "Excerpt 4.1: apps/windows-collector/tarang_collector/probe.py — probe_windows_wifi()",
-        read_snippet("apps/windows-collector/tarang_collector/probe.py", 51, 125),
+        "Excerpt 4.1: apps/windows-collector/tarang_collector/probe.py — Honest RSSI & Quality Parsing",
+        read_snippet("apps/windows-collector/tarang_collector/probe.py", 66, 81),
     )
 
     add_heading(doc, "4.2 Active TCP Latency & Opt-In Internet Speed Test (probe.py)", level=2)
@@ -469,27 +590,25 @@ def build_report():
         "`run_active_speed_test()` performs an opt-in streamed download/upload benchmark against "
         "`speed.cloudflare.com` and reports actual Download and Upload Mbps."
     )
+    add_figure(doc, FIG_DIR / "fig_phy_vs_isp.png", "Figure 4.2: Why Wi-Fi PHY Link Rate (144.4 Mbps) != Internet Speed (29.84 Mbps).")
     add_code_block(
         doc,
-        "Excerpt 4.2: apps/windows-collector/tarang_collector/probe.py — run_active_speed_test()",
-        read_snippet("apps/windows-collector/tarang_collector/probe.py", 185, 229),
+        "Excerpt 4.2: apps/windows-collector/tarang_collector/probe.py — Timed Download Throughput",
+        read_snippet("apps/windows-collector/tarang_collector/probe.py", 198, 207),
     )
+    doc.add_page_break()
 
-    add_heading(doc, "4.3 SQLite Offline Queue & Collector Loop (storage.py & server.py)", level=2)
+    add_heading(doc, "4.3 SQLite Offline Queue & Idempotent Sync Flow", level=2)
     add_body(
         doc,
         "`OfflineQueue` persists each captured observation to `~/.tarang/windows_collector_queue.db` "
         "before attempting database flush, ensuring zero observation loss if the app closes mid-survey."
     )
+    add_figure(doc, FIG_DIR / "fig_idempotent_sync.png", "Figure 4.3: Offline SQLite Queue & Idempotent Batch Sync Flow.")
     add_code_block(
         doc,
-        "Excerpt 4.3: apps/windows-collector/tarang_collector/storage.py — OfflineQueue",
-        read_snippet("apps/windows-collector/tarang_collector/storage.py", 1, 56),
-    )
-    add_code_block(
-        doc,
-        "Excerpt 4.4: apps/windows-collector/tarang_collector/server.py — Background Collector Loop",
-        read_snippet("apps/windows-collector/tarang_collector/server.py", 64, 122),
+        "Excerpt 4.3: apps/windows-collector/tarang_collector/storage.py — Idempotent Enqueue",
+        read_snippet("apps/windows-collector/tarang_collector/storage.py", 27, 36),
     )
 
     add_heading(doc, "4.4 Radio-Specific Signal Tier Classification (analysis.py)", level=2)
@@ -497,47 +616,64 @@ def build_report():
         doc,
         "Each radio technology uses its own calibrated thresholds rather than a single universal dBm scale."
     )
+    add_figure(doc, FIG_DIR / "fig_signal_tiers_scale.png", "Figure 4.4: Radio-Specific Signal Tier Scales (Never Mixed).")
     add_code_block(
         doc,
-        "Excerpt 4.5: services/api/app/analysis.py — Tier Classification Rules",
-        read_snippet("services/api/app/analysis.py", 1, 78),
+        "Excerpt 4.4: services/api/app/analysis.py — Wi-Fi RSSI Classifier",
+        read_snippet("services/api/app/analysis.py", 8, 18),
     )
+    doc.add_page_break()
 
     add_heading(doc, "4.5 Rules-Based Optimization Engine (analysis.py)", level=2)
     add_figure(doc, FIG_DIR / "fig_rules_pipeline.png", "Figure 4.1: Rules-Based Optimization Engine (Rules A–E).")
     add_code_block(
         doc,
-        "Excerpt 4.6: services/api/app/analysis.py — Rules A, B, C, E Insights Generator",
-        read_snippet("services/api/app/analysis.py", 125, 195),
+        "Excerpt 4.5: services/api/app/analysis.py — Rule A Coverage Gap Detection",
+        read_snippet("services/api/app/analysis.py", 125, 138),
     )
 
     add_heading(doc, "4.6 Idempotent Batch Ingestion (observations.py)", level=2)
     add_code_block(
         doc,
-        "Excerpt 4.7: services/api/app/routers/observations.py — Deduplication on Retry",
-        read_snippet("services/api/app/routers/observations.py", 75, 130),
+        "Excerpt 4.6: services/api/app/routers/observations.py — Deduplication on Retry",
+        read_snippet("services/api/app/routers/observations.py", 84, 98),
     )
 
     add_heading(doc, "4.7 Session Comparison & Redacted Export (exports.py)", level=2)
-    add_code_block(
+    add_body(
         doc,
-        "Excerpt 4.8: services/api/app/routers/exports.py — Session Comparison Caveats",
-        read_snippet("services/api/app/routers/exports.py", 100, 155),
+        "When comparing two sessions, TARANG automatically checks for mismatched hardware models, "
+        "different Wi-Fi bands (2.4 GHz vs 5 GHz), and sample-count imbalances, surfacing explicit "
+        "caveats alongside the side-by-side medians."
     )
 
     add_heading(doc, "4.8 Hybrid Frontend Auto-Detection & Live Polling (api.ts)", level=2)
     add_code_block(
         doc,
-        "Excerpt 4.9: apps/web/src/api.ts — detectBackend() Hybrid Discovery",
-        read_snippet("apps/web/src/api.ts", 23, 62),
+        "Excerpt 4.7: apps/web/src/api.ts — No-Store Live Scan",
+        read_snippet("apps/web/src/api.ts", 142, 150),
     )
 
     add_heading(doc, "4.9 Android Permission-Aware RadioCapabilityProbe (Kotlin)", level=2)
     add_code_block(
         doc,
-        "Excerpt 4.10: apps/android/.../RadioCapabilityProbe.kt — Safe Telephony & Wi-Fi Capture",
-        read_snippet("apps/android/app/src/main/java/com/tarang/collector/RadioCapabilityProbe.kt", 33, 95),
+        "Excerpt 4.8: apps/android/.../RadioCapabilityProbe.kt — Safe Permission Check",
+        read_snippet("apps/android/app/src/main/java/com/tarang/collector/RadioCapabilityProbe.kt", 33, 45),
     )
+    add_heading(doc, "LIST OF TABLES", level=2)
+    for tbl_lbl in [
+        "Table 1.1: Candidate & Academic Submission Metadata",
+        "Table 1.2: Software and Hardware Requirements",
+        "Table 2.1: Existing Commercial Tools vs TARANG Hybrid System",
+        "Table 2.2: Functional Requirements Matrix (FR-01 to FR-06)",
+        "Table 3.1: Package & Module Responsibility Matrix",
+        "Table 5.1: REST API v1 & Windows Localhost Bridge Endpoints",
+        "Table 6.1: Responsive Viewport & Interaction Budget Specification",
+        "Table 7.1: Automated Verification & Build Test Results",
+        "Table 7.2: STRIDE CyberSecurity Threat & Control Matrix",
+        "Table A.1: Radio-Specific Signal Tier Thresholds Reference",
+    ]:
+        add_bullet(doc, tbl_lbl)
     doc.add_page_break()
 
     # ---------------- CHAPTER 5 ----------------
@@ -591,6 +727,20 @@ def build_report():
 }
 """,
     )
+    add_heading(doc, "LIST OF TABLES", level=2)
+    for tbl_lbl in [
+        "Table 1.1: Candidate & Academic Submission Metadata",
+        "Table 1.2: Software and Hardware Requirements",
+        "Table 2.1: Existing Commercial Tools vs TARANG Hybrid System",
+        "Table 2.2: Functional Requirements Matrix (FR-01 to FR-06)",
+        "Table 3.1: Package & Module Responsibility Matrix",
+        "Table 5.1: REST API v1 & Windows Localhost Bridge Endpoints",
+        "Table 6.1: Responsive Viewport & Interaction Budget Specification",
+        "Table 7.1: Automated Verification & Build Test Results",
+        "Table 7.2: STRIDE CyberSecurity Threat & Control Matrix",
+        "Table A.1: Radio-Specific Signal Tier Thresholds Reference",
+    ]:
+        add_bullet(doc, tbl_lbl)
     doc.add_page_break()
 
     # ---------------- CHAPTER 6 ----------------
@@ -611,12 +761,27 @@ def build_report():
         "Figure 6.1: Synthetic Privacy-Safe Indoor Wi-Fi Coverage Floor Plan Preview.",
         width_in=5.6,
     )
+    doc.add_page_break()
     add_figure(
         doc,
         FIG_DIR / "preview_outdoor_cellular.jpg",
         "Figure 6.2: Synthetic Privacy-Safe Outdoor Campus 5G/LTE Walk Survey Preview.",
         width_in=5.6,
     )
+    add_heading(doc, "LIST OF TABLES", level=2)
+    for tbl_lbl in [
+        "Table 1.1: Candidate & Academic Submission Metadata",
+        "Table 1.2: Software and Hardware Requirements",
+        "Table 2.1: Existing Commercial Tools vs TARANG Hybrid System",
+        "Table 2.2: Functional Requirements Matrix (FR-01 to FR-06)",
+        "Table 3.1: Package & Module Responsibility Matrix",
+        "Table 5.1: REST API v1 & Windows Localhost Bridge Endpoints",
+        "Table 6.1: Responsive Viewport & Interaction Budget Specification",
+        "Table 7.1: Automated Verification & Build Test Results",
+        "Table 7.2: STRIDE CyberSecurity Threat & Control Matrix",
+        "Table A.1: Radio-Specific Signal Tier Thresholds Reference",
+    ]:
+        add_bullet(doc, tbl_lbl)
     doc.add_page_break()
 
     add_heading(doc, "6.3 Live Working Application Screenshots (Captured from Laptop at 127.0.0.1:8765)", level=2)
@@ -626,10 +791,75 @@ def build_report():
         "running on http://127.0.0.1:8765 on Windows 11 with the MediaTek MT7921 Wi-Fi 6 adapter."
     )
     add_figure(doc, FIG_DIR / "ss_01_overview.png", "Figure 6.3: Live Overview Dashboard & Windows Laptop Collector Card (127.0.0.1:8765).", width_in=5.9)
+    add_body(doc, "In Figure 6.3, the Overview screen surfaces the live Windows Laptop Collector status (MediaTek MT7921 adapter), project selector, and immediate KPIs without visual clutter.")
+    add_heading(doc, "LIST OF TABLES", level=2)
+    for tbl_lbl in [
+        "Table 1.1: Candidate & Academic Submission Metadata",
+        "Table 1.2: Software and Hardware Requirements",
+        "Table 2.1: Existing Commercial Tools vs TARANG Hybrid System",
+        "Table 2.2: Functional Requirements Matrix (FR-01 to FR-06)",
+        "Table 3.1: Package & Module Responsibility Matrix",
+        "Table 5.1: REST API v1 & Windows Localhost Bridge Endpoints",
+        "Table 6.1: Responsive Viewport & Interaction Budget Specification",
+        "Table 7.1: Automated Verification & Build Test Results",
+        "Table 7.2: STRIDE CyberSecurity Threat & Control Matrix",
+        "Table A.1: Radio-Specific Signal Tier Thresholds Reference",
+    ]:
+        add_bullet(doc, tbl_lbl)
+    doc.add_page_break()
     add_figure(doc, FIG_DIR / "ss_02_live_survey.png", "Figure 6.4: Live Survey View — Real-Time Windows WLAN Reading, Speed Test & Floor Plan Marker.", width_in=5.9)
+    add_body(doc, "Figure 6.4 demonstrates the glanceable Live Survey screen with real-time signal tier, freshness indicator, opt-in Latency Probe and Speed Test buttons, and tap-to-mark indoor floor plan.")
+    add_heading(doc, "LIST OF TABLES", level=2)
+    for tbl_lbl in [
+        "Table 1.1: Candidate & Academic Submission Metadata",
+        "Table 1.2: Software and Hardware Requirements",
+        "Table 2.1: Existing Commercial Tools vs TARANG Hybrid System",
+        "Table 2.2: Functional Requirements Matrix (FR-01 to FR-06)",
+        "Table 3.1: Package & Module Responsibility Matrix",
+        "Table 5.1: REST API v1 & Windows Localhost Bridge Endpoints",
+        "Table 6.1: Responsive Viewport & Interaction Budget Specification",
+        "Table 7.1: Automated Verification & Build Test Results",
+        "Table 7.2: STRIDE CyberSecurity Threat & Control Matrix",
+        "Table A.1: Radio-Specific Signal Tier Thresholds Reference",
+    ]:
+        add_bullet(doc, tbl_lbl)
+    doc.add_page_break()
     add_figure(doc, FIG_DIR / "ss_03_map_explorer.png", "Figure 6.5: Map Explorer — Measured Points, Legend, and Point Inspector.", width_in=5.9)
+    add_body(doc, "Figure 6.5 shows the Map Explorer with radio/session filters, bounded heatmap toggle, unit-labeled legend, Point Inspector, and accessible List View switch.")
+    add_heading(doc, "LIST OF TABLES", level=2)
+    for tbl_lbl in [
+        "Table 1.1: Candidate & Academic Submission Metadata",
+        "Table 1.2: Software and Hardware Requirements",
+        "Table 2.1: Existing Commercial Tools vs TARANG Hybrid System",
+        "Table 2.2: Functional Requirements Matrix (FR-01 to FR-06)",
+        "Table 3.1: Package & Module Responsibility Matrix",
+        "Table 5.1: REST API v1 & Windows Localhost Bridge Endpoints",
+        "Table 6.1: Responsive Viewport & Interaction Budget Specification",
+        "Table 7.1: Automated Verification & Build Test Results",
+        "Table 7.2: STRIDE CyberSecurity Threat & Control Matrix",
+        "Table A.1: Radio-Specific Signal Tier Thresholds Reference",
+    ]:
+        add_bullet(doc, tbl_lbl)
+    doc.add_page_break()
     add_figure(doc, FIG_DIR / "ss_04_insights.png", "Figure 6.6: Insights & Analytics — Signal Distributions & Rules-Based Recommendations.", width_in=5.9)
+    add_body(doc, "Figure 6.6 presents the Recharts distribution bar chart, room-by-room RSSI sequence, flagged weak spots, and Rules A–E optimization cards.")
+    add_heading(doc, "LIST OF TABLES", level=2)
+    for tbl_lbl in [
+        "Table 1.1: Candidate & Academic Submission Metadata",
+        "Table 1.2: Software and Hardware Requirements",
+        "Table 2.1: Existing Commercial Tools vs TARANG Hybrid System",
+        "Table 2.2: Functional Requirements Matrix (FR-01 to FR-06)",
+        "Table 3.1: Package & Module Responsibility Matrix",
+        "Table 5.1: REST API v1 & Windows Localhost Bridge Endpoints",
+        "Table 6.1: Responsive Viewport & Interaction Budget Specification",
+        "Table 7.1: Automated Verification & Build Test Results",
+        "Table 7.2: STRIDE CyberSecurity Threat & Control Matrix",
+        "Table A.1: Radio-Specific Signal Tier Thresholds Reference",
+    ]:
+        add_bullet(doc, tbl_lbl)
+    doc.add_page_break()
     add_figure(doc, FIG_DIR / "ss_05_compare_export.png", "Figure 6.7: Compare & Export — Session Comparison Caveats & Redacted CSV/JSON Export.", width_in=5.9)
+    add_figure(doc, FIG_DIR / "fig_ux_wireflow.png", "Figure 6.8: Comfort-First UX Wireflow (<= 2 Taps to Start Survey).", width_in=5.9)
 
     add_heading(doc, "6.4 Responsive Viewport & Interaction Budget Specification", level=2)
     add_table(
@@ -642,6 +872,20 @@ def build_report():
             [">= 1280 px (Desktop)", "Persistent slim sidebar + expansive map", "Full analyst controls with persistent unit-labeled legend"],
         ],
     )
+    add_heading(doc, "LIST OF TABLES", level=2)
+    for tbl_lbl in [
+        "Table 1.1: Candidate & Academic Submission Metadata",
+        "Table 1.2: Software and Hardware Requirements",
+        "Table 2.1: Existing Commercial Tools vs TARANG Hybrid System",
+        "Table 2.2: Functional Requirements Matrix (FR-01 to FR-06)",
+        "Table 3.1: Package & Module Responsibility Matrix",
+        "Table 5.1: REST API v1 & Windows Localhost Bridge Endpoints",
+        "Table 6.1: Responsive Viewport & Interaction Budget Specification",
+        "Table 7.1: Automated Verification & Build Test Results",
+        "Table 7.2: STRIDE CyberSecurity Threat & Control Matrix",
+        "Table A.1: Radio-Specific Signal Tier Thresholds Reference",
+    ]:
+        add_bullet(doc, tbl_lbl)
     doc.add_page_break()
 
     # ---------------- CHAPTER 7 ----------------
@@ -659,10 +903,15 @@ def build_report():
         ],
     )
     add_figure(doc, FIG_DIR / "fig_signal_chart.png", "Figure 7.1: Seeded Apartment Indoor Wi-Fi RSSI by Room.")
+    doc.add_page_break()
     add_figure(doc, FIG_DIR / "fig_band_comparison.png", "Figure 7.2: 2.4 GHz (Windows Laptop) vs 5 GHz (Android) Propagation by Room.")
     add_figure(doc, FIG_DIR / "fig_test_breakdown.png", "Figure 7.3: Automated Verification & Build Checks (100% Passing).")
+    doc.add_page_break()
 
     add_heading(doc, "7.2 CyberSecurity Threat & Control Matrix (STRIDE)", level=2)
+    add_figure(doc, FIG_DIR / "fig_stride_matrix.png", "Figure 7.4: STRIDE CyberSecurity Threat Model & TARANG Defense Layers.")
+    add_figure(doc, FIG_DIR / "fig_privacy_pipeline.png", "Figure 7.5: Privacy-by-Default Telemetry Redaction & BSSID Hashing Pipeline.")
+    doc.add_page_break()
     add_table(
         doc,
         ["STRIDE Category", "Potential Threat", "Implemented Control in TARANG"],
@@ -683,6 +932,20 @@ def build_report():
         "Keep `~/.tarang/windows_collector_queue.db` and `services/api/tarang.db` out of version control (enforced by .gitignore).",
     ]:
         add_bullet(doc, m)
+    add_heading(doc, "LIST OF TABLES", level=2)
+    for tbl_lbl in [
+        "Table 1.1: Candidate & Academic Submission Metadata",
+        "Table 1.2: Software and Hardware Requirements",
+        "Table 2.1: Existing Commercial Tools vs TARANG Hybrid System",
+        "Table 2.2: Functional Requirements Matrix (FR-01 to FR-06)",
+        "Table 3.1: Package & Module Responsibility Matrix",
+        "Table 5.1: REST API v1 & Windows Localhost Bridge Endpoints",
+        "Table 6.1: Responsive Viewport & Interaction Budget Specification",
+        "Table 7.1: Automated Verification & Build Test Results",
+        "Table 7.2: STRIDE CyberSecurity Threat & Control Matrix",
+        "Table A.1: Radio-Specific Signal Tier Thresholds Reference",
+    ]:
+        add_bullet(doc, tbl_lbl)
     doc.add_page_break()
 
     # ---------------- CHAPTER 8 ----------------
@@ -711,6 +974,8 @@ def build_report():
     ]:
         add_bullet(doc, f)
 
+    doc.add_page_break()
+
     # ---------------- REFERENCES ----------------
     add_heading(doc, "REFERENCES", level=1)
     for ref in [
@@ -722,6 +987,8 @@ def build_report():
         "6. TARANG GitHub Repository — https://github.com/Shivamborn2shine/tarangmap",
     ]:
         add_body(doc, ref)
+
+    doc.add_page_break()
 
     # ---------------- APPENDICES ----------------
     add_heading(doc, "APPENDIX A: RADIO SIGNAL THRESHOLDS REFERENCE", level=1)
@@ -737,32 +1004,31 @@ def build_report():
         ],
     )
 
-    add_heading(doc, "APPENDIX B: ADDITIONAL SOURCE EXCERPTS", level=1)
+    add_heading(doc, "APPENDIX B: KEY CONTRACT & LAUNCHER SNIPPETS", level=1)
     add_code_block(
         doc,
-        "Excerpt B.1: services/api/app/schemas.py — Canonical ObservationIn Contract",
-        read_snippet("services/api/app/schemas.py", 96, 145),
+        "Excerpt B.1: services/api/app/schemas.py — ObservationIn Core Fields",
+        read_snippet("services/api/app/schemas.py", 96, 114),
     )
     add_code_block(
         doc,
-        "Excerpt B.2: apps/web/src/components/LiveSurveyView.tsx — Floor Plan Normalized Tap Marker",
-        read_snippet("apps/web/src/components/LiveSurveyView.tsx", 125, 165),
+        "Excerpt B.2: apps/web/src/components/LiveSurveyView.tsx — Floor Plan Tap Normalization",
+        read_snippet("apps/web/src/components/LiveSurveyView.tsx", 145, 155),
     )
-    add_code_block(
-        doc,
-        "Excerpt B.3: apps/web/src/components/MapExplorerView.tsx — Bounded Heatmap & Point Inspector",
-        read_snippet("apps/web/src/components/MapExplorerView.tsx", 145, 200),
-    )
-    add_code_block(
-        doc,
-        "Excerpt B.4: services/api/app/main.py — FastAPI Lifespan & Static Mounts",
-        read_snippet("services/api/app/main.py", 1, 52),
-    )
-    add_code_block(
-        doc,
-        "Excerpt B.5: apps/windows-collector/tarang_collector/server.py — Hybrid App & Capabilities",
-        read_snippet("apps/windows-collector/tarang_collector/server.py", 170, 235),
-    )
+    add_heading(doc, "LIST OF TABLES", level=2)
+    for tbl_lbl in [
+        "Table 1.1: Candidate & Academic Submission Metadata",
+        "Table 1.2: Software and Hardware Requirements",
+        "Table 2.1: Existing Commercial Tools vs TARANG Hybrid System",
+        "Table 2.2: Functional Requirements Matrix (FR-01 to FR-06)",
+        "Table 3.1: Package & Module Responsibility Matrix",
+        "Table 5.1: REST API v1 & Windows Localhost Bridge Endpoints",
+        "Table 6.1: Responsive Viewport & Interaction Budget Specification",
+        "Table 7.1: Automated Verification & Build Test Results",
+        "Table 7.2: STRIDE CyberSecurity Threat & Control Matrix",
+        "Table A.1: Radio-Specific Signal Tier Thresholds Reference",
+    ]:
+        add_bullet(doc, tbl_lbl)
     doc.add_page_break()
 
     add_heading(doc, "APPENDIX C: DEPLOYMENT & LAUNCHER GUIDE", level=1)
