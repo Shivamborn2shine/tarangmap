@@ -186,3 +186,49 @@ def run_active_tcp_probe(host: str = "1.1.1.1", port: int = 443, samples: int = 
         "packet_loss_pct": round(loss_pct, 1),
         "bytes_used": len(latencies) * 128,
     }
+
+
+def run_active_speed_test(download_bytes: int = 5_000_000, upload_bytes: int = 1_500_000) -> dict[str, Any]:
+    """Opt-in active internet throughput test (distinct from local Wi-Fi PHY link rate)."""
+    import httpx
+
+    dl_mbps = None
+    ul_mbps = None
+    bytes_used = 0
+    endpoint = "speed.cloudflare.com"
+
+    try:
+        with httpx.Client(timeout=12.0, follow_redirects=True) as client:
+            t0 = time.perf_counter()
+            dl_total = 0
+            with client.stream("GET", f"https://{endpoint}/__down?bytes={download_bytes}") as resp:
+                resp.raise_for_status()
+                for chunk in resp.iter_bytes(chunk_size=65536):
+                    dl_total += len(chunk)
+            dl_sec = max(time.perf_counter() - t0, 0.001)
+            dl_mbps = round((dl_total * 8) / (dl_sec * 1_000_000), 2)
+            bytes_used += dl_total
+
+            payload = b"0" * upload_bytes
+            t1 = time.perf_counter()
+            ul_resp = client.post(f"https://{endpoint}/__up", content=payload)
+            ul_resp.raise_for_status()
+            ul_sec = max(time.perf_counter() - t1, 0.001)
+            ul_mbps = round((upload_bytes * 8) / (ul_sec * 1_000_000), 2)
+            bytes_used += upload_bytes
+    except Exception as exc:
+        return {
+            "endpoint": endpoint,
+            "download_mbps": dl_mbps,
+            "upload_mbps": ul_mbps,
+            "bytes_used": bytes_used,
+            "error": str(exc),
+        }
+
+    return {
+        "endpoint": endpoint,
+        "download_mbps": dl_mbps,
+        "upload_mbps": ul_mbps,
+        "bytes_used": bytes_used,
+        "error": None,
+    }

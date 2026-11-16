@@ -189,6 +189,20 @@ export class TarangClient {
     return r.json();
   }
 
+  async runSpeedTest(): Promise<any> {
+    if (!this.conn.hasWindowsCollector) {
+      return {
+        endpoint: 'speed.cloudflare.com (Simulated)',
+        download_mbps: 29.8,
+        upload_mbps: 18.4,
+        bytes_used: 0,
+        error: null,
+      };
+    }
+    const r = await fetch(`${this.conn.baseUrl}/api/v1/windows/speed-test`, { method: 'POST' });
+    return r.json();
+  }
+
   async compareSessions(sessionA: string, sessionB: string): Promise<any> {
     if (this.conn.mode === 'demo') {
       const sa = DEMO_SESSIONS.find((s) => s.id === sessionA);

@@ -65,6 +65,8 @@ export function LiveSurveyView({
   const [showMoreMetrics, setShowMoreMetrics] = useState(false);
   const [liveScan, setLiveScan] = useState<WindowsLiveScan | null>(null);
   const [activeProbe, setActiveProbe] = useState<any | null>(null);
+  const [speedTest, setSpeedTest] = useState<any | null>(null);
+  const [speedTesting, setSpeedTesting] = useState(false);
   const [freshSeconds, setFreshSeconds] = useState(1);
   const imgRef = useRef<HTMLDivElement | null>(null);
 
@@ -215,17 +217,36 @@ export function LiveSurveyView({
             <span className="rounded-lg bg-[#F0F4F8] px-2.5 py-1 text-xs font-medium text-[#334E68]">
               {points.length} marked points
             </span>
-            <button
-              type="button"
-              onClick={async () => {
-                const res = await client.runActiveProbe();
-                setActiveProbe(res);
-              }}
-              className="inline-flex min-h-[38px] items-center gap-1.5 rounded-xl border border-[#CBD5E1] px-3 text-xs font-medium text-[#102A43] hover:bg-[#F0F4F8]"
-            >
-              <Activity className="h-3.5 w-3.5 text-[#087F8C]" />
-              Run Latency Probe
-            </button>
+            <div className="flex flex-wrap justify-end gap-2">
+              <button
+                type="button"
+                onClick={async () => {
+                  const res = await client.runActiveProbe();
+                  setActiveProbe(res);
+                }}
+                className="inline-flex min-h-[38px] items-center gap-1.5 rounded-xl border border-[#CBD5E1] px-3 text-xs font-medium text-[#102A43] hover:bg-[#F0F4F8]"
+              >
+                <Activity className="h-3.5 w-3.5 text-[#087F8C]" />
+                Latency Probe
+              </button>
+              <button
+                type="button"
+                disabled={speedTesting}
+                onClick={async () => {
+                  setSpeedTesting(true);
+                  try {
+                    const res = await client.runSpeedTest();
+                    setSpeedTest(res);
+                  } finally {
+                    setSpeedTesting(false);
+                  }
+                }}
+                className="inline-flex min-h-[38px] items-center gap-1.5 rounded-xl border border-[#CBD5E1] px-3 text-xs font-medium text-[#102A43] hover:bg-[#F0F4F8] disabled:opacity-50"
+              >
+                <Wifi className="h-3.5 w-3.5 text-[#3978CF]" />
+                {speedTesting ? 'Testing (~6.5 MB)…' : 'Speed Test (~6.5 MB)'}
+              </button>
+            </div>
           </div>
         </div>
 
@@ -237,6 +258,20 @@ export function LiveSurveyView({
             </strong>
             {activeProbe.jitter_ms != null ? ` • jitter ${activeProbe.jitter_ms} ms` : ''}
             {activeProbe.packet_loss_pct != null ? ` • ${activeProbe.packet_loss_pct}% loss` : ''}
+          </div>
+        )}
+
+        {speedTest && (
+          <div className="mt-2 rounded-xl bg-[#EAF2FC]/60 px-3.5 py-2 text-xs text-[#102A43]">
+            Internet throughput ({speedTest.endpoint}):{' '}
+            <strong className="tabular-nums">
+              ↓ {speedTest.download_mbps ?? 'N/A'} Mbps
+            </strong>{' '}
+            /{' '}
+            <strong className="tabular-nums">
+              ↑ {speedTest.upload_mbps ?? 'N/A'} Mbps
+            </strong>
+            {speedTest.error ? ` • ${speedTest.error}` : ''}
           </div>
         )}
 
@@ -256,10 +291,11 @@ export function LiveSurveyView({
               <div className="font-semibold text-[#102A43]">{liveScan?.radio_type || 'N/A'}</div>
             </div>
             <div>
-              <div className="text-[#627D98]">Link Speed (Rx/Tx)</div>
+              <div className="text-[#627D98]">Wi-Fi PHY Link Rate</div>
               <div className="tabular-nums font-semibold text-[#102A43]">
                 {liveScan?.rx_mbps ? `${liveScan.rx_mbps} / ${liveScan.tx_mbps} Mbps` : 'N/A'}
               </div>
+              <div className="text-[10px] text-[#627D98]">Router ↔ Laptop radio rate (not ISP speed)</div>
             </div>
             <div>
               <div className="text-[#627D98]">Frequency</div>

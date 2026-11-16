@@ -21,7 +21,7 @@ from app.main import app as base_tarang_app  # noqa: E402
 from app.database import SessionLocal  # noqa: E402
 from app.models import Device, Observation, Project, SurveySession, WifiObservation  # noqa: E402
 
-from .probe import probe_windows_wifi, run_active_tcp_probe, scan_nearby_networks  # noqa: E402
+from .probe import probe_windows_wifi, run_active_speed_test, run_active_tcp_probe, scan_nearby_networks  # noqa: E402
 from .storage import OfflineQueue  # noqa: E402
 
 QUEUE_DB = Path.home() / ".tarang" / "windows_collector_queue.db"
@@ -216,6 +216,11 @@ def windows_live_scan(include_nearby: bool = False):
 @win_router.post("/active-probe")
 def windows_active_probe(host: str = "1.1.1.1", port: int = 443):
     return run_active_tcp_probe(host=host, port=port)
+
+
+@win_router.post("/speed-test")
+def windows_speed_test():
+    return run_active_speed_test()
 
 
 @win_router.get("/collector/status")
