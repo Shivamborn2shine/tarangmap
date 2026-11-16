@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tarangmap.local/contracts/observation.schema.json",
+  "title": "TARANG Canonical Observation Contract v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "id",
+    "session_id",
+    "device_id",
+    "kind",
+    "technology",
+    "observed_at",
+    "recorded_at",
+    "metric_source",
+    "freshness_ms",
+    "location_kind"
+  ],
+  "properties": {
+    "schema_version": { "type": "integer", "const": 1 },
+    "id": { "type": "string", "format": "uuid" },
+    "session_id": { "type": "string", "format": "uuid" },
+    "device_id": { "type": "string", "format": "uuid" },
+    "kind": { "type": "string", "enum": ["wifi", "cellular", "active_test"] },
+    "technology": { "type": "string", "enum": ["wifi", "lte", "nr", "unknown"] },
+    "observed_at": { "type": "string", "format": "date-time" },
+    "recorded_at": { "type": "string", "format": "date-time" },
+    "received_at": { "type": ["string", "null"], "format": "date-time" },
+    "metric_source": { "type": "string" },
+    "freshness_ms": { "type": "integer", "minimum": 0 },
+    "missing_reason": { "type": ["string", "null"] },
+    "location_kind": { "type": "string", "enum": ["indoor", "outdoor", "unknown"] },
+    "room_label": { "type": ["string", "null"] },
+    "x_norm": { "type": ["number", "null"], "minimum": 0, "maximum": 1 },
+    "y_norm": { "type": ["number", "null"], "minimum": 0, "maximum": 1 },
+    "lat": { "type": ["number", "null"], "minimum": -90, "maximum": 90 },
+    "lon": { "type": ["number", "null"], "minimum": -180, "maximum": 180 },
+    "gps_accuracy_m": { "type": ["number", "null"], "minimum": 0 },
+    "wifi": {
+      "type": ["object", "null"],
+      "properties": {
+        "ssid": { "type": ["string", "null"] },
+        "bssid_hash": { "type": ["string", "null"] },
+        "frequency_mhz": { "type": ["integer", "null"] },
+        "band": { "type": ["string", "null"], "enum": ["2.4 GHz", "5 GHz", "6 GHz", null] },
+        "channel": { "type": ["integer", "null"] },
+        "rssi_dbm": { "type": ["integer", "null"], "minimum": -120, "maximum": 0 },
+        "quality_percent": { "type": ["integer", "null"], "minimum": 0, "maximum": 100 },
+        "rx_mbps": { "type": ["number", "null"] },
+        "tx_mbps": { "type": ["number", "null"] },
+        "radio_type": { "type": ["string", "null"] }
+      }
+    },
+    "cellular": {
+      "type": ["object", "null"],
+      "properties": {
+        "operator_name": { "type": ["string", "null"] },
+        "tech": { "type": ["string", "null"], "enum": ["LTE", "NR", "NR_NSA", "3G", "2G", null] },
+        "registered": { "type": "boolean" },
+        "rsrp_dbm": { "type": ["integer", "null"] },
+        "rsrq_db": { "type": ["integer", "null"] },
+        "sinr_db": { "type": ["integer", "null"] },
+        "ss_rsrp_dbm": { "type": ["integer", "null"] },
+        "ss_rsrq_db": { "type": ["integer", "null"] },
+        "ss_sinr_db": { "type": ["integer", "null"] },
+        "pci": { "type": ["integer", "null"] },
+        "tac": { "type": ["integer", "null"] },
+        "band": { "type": ["string", "null"] }
+      }
+    },
+    "active_test": {
+      "type": ["object", "null"],
+      "properties": {
+        "endpoint": { "type": "string" },
+        "latency_ms": { "type": ["number", "null"] },
+        "jitter_ms": { "type": ["number", "null"] },
+        "packet_loss_pct": { "type": ["number", "null"] },
+        "download_mbps": { "type": ["number", "null"] },
+        "upload_mbps": { "type": ["number", "null"] },
+        "bytes_used": { "type": ["integer", "null"] }
+      }
+    }
+  }
+}
