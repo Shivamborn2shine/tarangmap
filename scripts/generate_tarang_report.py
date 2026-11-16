@@ -8,11 +8,17 @@ from docx.shared import Inches, Pt, RGBColor
 
 ROOT = Path(__file__).resolve().parent.parent
 FIG_DIR = ROOT / "docs" / "report_figures"
-OUT_PATH = ROOT / "docs" / "TARANG_Project_Report_Shivam_Kumar_Detailed.docx"
+OUT_PATH = ROOT / "docs" / "TARANG_Project_Report_Shivam_Kumar_40p.docx"
 
 NAVY = RGBColor(0x10, 0x2A, 0x43)
 TEAL = RGBColor(0x08, 0x7F, 0x8C)
 MUTED = RGBColor(0x48, 0x65, 0x81)
+
+
+def read_snippet(rel_path: str, start: int, end: int) -> str:
+    p = ROOT / rel_path
+    lines = p.read_text(encoding="utf-8").splitlines()
+    return "\n".join(lines[start - 1 : end])
 
 
 def set_cell_bg(cell, hex_color: str):
@@ -57,7 +63,7 @@ def add_code_block(doc: docx.Document, caption: str, code: str):
     p = cell.paragraphs[0]
     r = p.add_run(code.strip())
     r.font.name = "Consolas"
-    r.font.size = Pt(8.5)
+    r.font.size = Pt(8.2)
     r.font.color.rgb = NAVY
     doc.add_paragraph()
 
@@ -72,7 +78,7 @@ def add_heading(doc: docx.Document, text: str, level: int = 1):
 def add_body(doc: docx.Document, text: str):
     p = doc.add_paragraph(text)
     p.paragraph_format.space_after = Pt(6)
-    p.paragraph_format.line_spacing = 1.2
+    p.paragraph_format.line_spacing = 1.22
     for r in p.runs:
         r.font.size = Pt(11)
     return p
@@ -192,9 +198,9 @@ def build_report():
     add_body(
         doc,
         "The matter embodied in this report has not been submitted to any other university or "
-        "institution for the award of any degree or diploma. All measurements, screenshots, and "
-        "automated verification results documented herein were produced from the actual implemented "
-        "software repository."
+        "institution for the award of any degree or diploma. All architectural diagrams, source code "
+        "excerpts, automated test metrics, and live application screenshots documented in this report "
+        "were generated directly from the implemented TARANG repository."
     )
     doc.add_paragraph("\nCandidate Signature: ________________________\nName: Shivam Kumar (Roll No. 2105130)")
     doc.add_page_break()
@@ -245,10 +251,10 @@ def build_report():
         "Chapter 1: Introduction (Overview, Motivation, Problem Statement, Objectives, Scope, Requirements)",
         "Chapter 2: System Analysis and Requirements (Existing vs Proposed, Functional, CyberSecurity, DFD)",
         "Chapter 3: System Design and Architecture (Hybrid Architecture, Database ER Schema, Module Matrix)",
-        "Chapter 4: Core Methods, Algorithms and Source Code Working (8 Core Modules + Code Chunks)",
+        "Chapter 4: Core Methods, Algorithms and Source Code Working (10 Core Modules + Full Code Chunks)",
         "Chapter 5: REST API Specification (Endpoint Matrix & Canonical JSON v1 Contracts)",
         "Chapter 6: Input and Output Design (Sequence Diagram, Synthetic Live Previews, Real Laptop Screenshots)",
-        "Chapter 7: Implementation, Testing, CyberSecurity and Maintenance (Pytest, STRIDE Matrix, Maintenance)",
+        "Chapter 7: Implementation, Testing, CyberSecurity and Maintenance (Pytest, Charts, STRIDE Matrix)",
         "Chapter 8: Summary, Learning Outcomes and Future Scope",
         "References",
         "Appendices A–D: Radio Thresholds, Additional Source Excerpts, Deployment Guide, Checklist",
@@ -262,9 +268,12 @@ def build_report():
         "Figure 3.2: Canonical Relational & Geospatial Database Schema (v1)",
         "Figure 4.1: Rules-Based Optimization Engine (Rules A–E)",
         "Figure 6.0: End-to-End Sequence — Windows Hybrid Survey & Speed Test",
-        "Figure 6.1–6.2: Synthetic Privacy-Safe Live Preview Demonstrations (Indoor & Outdoor)",
+        "Figure 6.1: Synthetic Privacy-Safe Indoor Wi-Fi Coverage Floor Plan Preview",
+        "Figure 6.2: Synthetic Privacy-Safe Outdoor Campus 5G/LTE Walk Survey Preview",
         "Figure 6.3–6.7: Real Working Laptop Application Screenshots (http://127.0.0.1:8765)",
         "Figure 7.1: Seeded Apartment Indoor Wi-Fi RSSI by Room",
+        "Figure 7.2: 2.4 GHz (Windows Laptop) vs 5 GHz (Android) Propagation by Room",
+        "Figure 7.3: Automated Verification & Build Checks (100% Passing)",
     ]:
         add_bullet(doc, fig_lbl)
     doc.add_page_break()
@@ -409,7 +418,14 @@ def build_report():
     )
     add_figure(doc, FIG_DIR / "fig_er_schema.png", "Figure 3.2: Canonical Relational & Geospatial Database Schema (v1).")
 
-    add_heading(doc, "3.3 Package & Module Responsibility Matrix", level=2)
+    add_heading(doc, "3.3 SQLAlchemy ORM Models (services/api/app/models.py)", level=2)
+    add_code_block(
+        doc,
+        "Excerpt 3.1: services/api/app/models.py — Core Observation & WifiObservation Models",
+        read_snippet("services/api/app/models.py", 75, 130),
+    )
+
+    add_heading(doc, "3.4 Package & Module Responsibility Matrix", level=2)
     add_table(
         doc,
         ["Module Path", "Responsibility"],
@@ -441,18 +457,8 @@ def build_report():
     )
     add_code_block(
         doc,
-        "Excerpt 4.1: apps/windows-collector/tarang_collector/probe.py — Honest netsh wlan parsing",
-        """
-quality_match = re.search(r"(\\d+)\\s*%", kv.get("signal", ""))
-quality_pct = int(quality_match.group(1)) if quality_match else None
-
-rssi_raw = kv.get("rssi")
-rssi_dbm = None
-if rssi_raw:
-    m = re.search(r"(-?\\d+)", rssi_raw)
-    if m:
-        rssi_dbm = int(m.group(1))
-""",
+        "Excerpt 4.1: apps/windows-collector/tarang_collector/probe.py — probe_windows_wifi()",
+        read_snippet("apps/windows-collector/tarang_collector/probe.py", 51, 125),
     )
 
     add_heading(doc, "4.2 Active TCP Latency & Opt-In Internet Speed Test (probe.py)", level=2)
@@ -465,15 +471,8 @@ if rssi_raw:
     )
     add_code_block(
         doc,
-        "Excerpt 4.2: apps/windows-collector/tarang_collector/probe.py — Active Speed Test",
-        """
-with client.stream("GET", f"https://{endpoint}/__down?bytes={download_bytes}") as resp:
-    resp.raise_for_status()
-    for chunk in resp.iter_bytes(chunk_size=65536):
-        dl_total += len(chunk)
-dl_sec = max(time.perf_counter() - t0, 0.001)
-dl_mbps = round((dl_total * 8) / (dl_sec * 1_000_000), 2)
-""",
+        "Excerpt 4.2: apps/windows-collector/tarang_collector/probe.py — run_active_speed_test()",
+        read_snippet("apps/windows-collector/tarang_collector/probe.py", 185, 229),
     )
 
     add_heading(doc, "4.3 SQLite Offline Queue & Collector Loop (storage.py & server.py)", level=2)
@@ -484,16 +483,13 @@ dl_mbps = round((dl_total * 8) / (dl_sec * 1_000_000), 2)
     )
     add_code_block(
         doc,
-        "Excerpt 4.3: apps/windows-collector/tarang_collector/storage.py — Durable SQLite Queue",
-        """
-def enqueue(self, obs_id: str, payload: dict[str, Any], created_at: str) -> None:
-    with self._connect() as conn:
-        conn.execute(
-            "INSERT OR IGNORE INTO pending_observations (id, payload_json, created_at) VALUES (?, ?, ?)",
-            (obs_id, json.dumps(payload), created_at),
-        )
-        conn.commit()
-""",
+        "Excerpt 4.3: apps/windows-collector/tarang_collector/storage.py — OfflineQueue",
+        read_snippet("apps/windows-collector/tarang_collector/storage.py", 1, 56),
+    )
+    add_code_block(
+        doc,
+        "Excerpt 4.4: apps/windows-collector/tarang_collector/server.py — Background Collector Loop",
+        read_snippet("apps/windows-collector/tarang_collector/server.py", 64, 122),
     )
 
     add_heading(doc, "4.4 Radio-Specific Signal Tier Classification (analysis.py)", level=2)
@@ -503,87 +499,44 @@ def enqueue(self, obs_id: str, payload: dict[str, Any], created_at: str) -> None
     )
     add_code_block(
         doc,
-        "Excerpt 4.4: services/api/app/analysis.py — Wi-Fi RSSI, Quality %, LTE & NR Classifiers",
-        """
-def classify_wifi_rssi(rssi: int | None) -> str:
-    if rssi is None: return "Unavailable"
-    if rssi >= -55: return "Strong"
-    if rssi >= -67: return "Good"
-    if rssi >= -75: return "Fair"
-    return "Weak"
-
-def classify_lte_rsrp(rsrp: int | None) -> str:
-    if rsrp is None: return "Unavailable"
-    if rsrp >= -85: return "Strong"
-    if rsrp >= -98: return "Good"
-    if rsrp >= -110: return "Fair"
-    return "Weak"
-""",
+        "Excerpt 4.5: services/api/app/analysis.py — Tier Classification Rules",
+        read_snippet("services/api/app/analysis.py", 1, 78),
     )
 
     add_heading(doc, "4.5 Rules-Based Optimization Engine (analysis.py)", level=2)
     add_figure(doc, FIG_DIR / "fig_rules_pipeline.png", "Figure 4.1: Rules-Based Optimization Engine (Rules A–E).")
     add_code_block(
         doc,
-        "Excerpt 4.5: services/api/app/analysis.py — Rule A Coverage Gap Detection",
-        """
-for area, values in room_wifi.items():
-    med = median(values)
-    tier = classify_wifi_rssi(int(round(med)))
-    if tier in ("Weak", "Fair"):
-        weak_spots.append({
-            "area": area, "metric": "Wi-Fi RSSI",
-            "median_value": round(med, 1), "unit": "dBm",
-            "tier": tier, "sample_count": len(values),
-        })
-""",
+        "Excerpt 4.6: services/api/app/analysis.py — Rules A, B, C, E Insights Generator",
+        read_snippet("services/api/app/analysis.py", 125, 195),
     )
 
     add_heading(doc, "4.6 Idempotent Batch Ingestion (observations.py)", level=2)
     add_code_block(
         doc,
-        "Excerpt 4.6: services/api/app/routers/observations.py — Deduplication on Retry",
-        """
-for item in payload.observations:
-    if db.query(Observation.id).filter(Observation.id == item.id).first():
-        duplicate += 1
-        items.append(BatchItemResult(id=item.id, status="duplicate", reason="Already ingested"))
-        continue
-    if item.session_id not in valid_sessions:
-        rejected += 1
-        items.append(BatchItemResult(id=item.id, status="rejected", reason="Unknown session_id"))
-        continue
-""",
+        "Excerpt 4.7: services/api/app/routers/observations.py — Deduplication on Retry",
+        read_snippet("services/api/app/routers/observations.py", 75, 130),
     )
 
-    add_heading(doc, "4.7 Hybrid Frontend Auto-Detection & Live Polling (api.ts)", level=2)
+    add_heading(doc, "4.7 Session Comparison & Redacted Export (exports.py)", level=2)
     add_code_block(
         doc,
-        "Excerpt 4.7: apps/web/src/api.ts — Localhost Collector Probe & No-Store Live Scan",
-        """
-async getWindowsLiveScan(includeNearby = false) {
-  if (!this.conn.hasWindowsCollector) return null;
-  const r = await fetch(
-    `${this.conn.baseUrl}/api/v1/windows/live-scan?include_nearby=${includeNearby}`,
-    { cache: 'no-store' }
-  );
-  return r.ok ? r.json() : null;
-}
-""",
+        "Excerpt 4.8: services/api/app/routers/exports.py — Session Comparison Caveats",
+        read_snippet("services/api/app/routers/exports.py", 100, 155),
     )
 
-    add_heading(doc, "4.8 Android Permission-Aware RadioCapabilityProbe (Kotlin)", level=2)
+    add_heading(doc, "4.8 Hybrid Frontend Auto-Detection & Live Polling (api.ts)", level=2)
     add_code_block(
         doc,
-        "Excerpt 4.8: apps/android/.../RadioCapabilityProbe.kt — Safe Telephony & Wi-Fi Capture",
-        """
-val hasFineLocation = ContextCompat.checkSelfPermission(
-    context, Manifest.permission.ACCESS_FINE_LOCATION
-) == PackageManager.PERMISSION_GRANTED
-if (!hasFineLocation) {
-    wifiReason = "ACCESS_FINE_LOCATION not granted"
-}
-""",
+        "Excerpt 4.9: apps/web/src/api.ts — detectBackend() Hybrid Discovery",
+        read_snippet("apps/web/src/api.ts", 23, 62),
+    )
+
+    add_heading(doc, "4.9 Android Permission-Aware RadioCapabilityProbe (Kotlin)", level=2)
+    add_code_block(
+        doc,
+        "Excerpt 4.10: apps/android/.../RadioCapabilityProbe.kt — Safe Telephony & Wi-Fi Capture",
+        read_snippet("apps/android/app/src/main/java/com/tarang/collector/RadioCapabilityProbe.kt", 33, 95),
     )
     doc.add_page_break()
 
@@ -616,6 +569,25 @@ if (!hasFineLocation) {
   "duplicate": 0,
   "rejected": 0,
   "items": [{ "id": "a1b2c3d4-...", "status": "accepted", "reason": null }]
+}
+""",
+    )
+    add_code_block(
+        doc,
+        "Example 5.2: Live Windows WLAN Scan Response (GET /api/v1/windows/live-scan)",
+        """
+{
+  "interface": {
+    "available": true,
+    "adapter_description": "MediaTek MT7921 Wi-Fi 6 802.11ax PCIe Adapter",
+    "state": "connected",
+    "ssid": "Airtel_suna_6489",
+    "band": "2.4 GHz",
+    "channel": 6,
+    "quality_percent": 77,
+    "rssi_dbm": -61,
+    "metric_source": "windows_netsh_wlan"
+  }
 }
 """,
     )
@@ -658,6 +630,18 @@ if (!hasFineLocation) {
     add_figure(doc, FIG_DIR / "ss_03_map_explorer.png", "Figure 6.5: Map Explorer — Measured Points, Legend, and Point Inspector.", width_in=5.9)
     add_figure(doc, FIG_DIR / "ss_04_insights.png", "Figure 6.6: Insights & Analytics — Signal Distributions & Rules-Based Recommendations.", width_in=5.9)
     add_figure(doc, FIG_DIR / "ss_05_compare_export.png", "Figure 6.7: Compare & Export — Session Comparison Caveats & Redacted CSV/JSON Export.", width_in=5.9)
+
+    add_heading(doc, "6.4 Responsive Viewport & Interaction Budget Specification", level=2)
+    add_table(
+        doc,
+        ["Viewport Width", "Layout Mode", "Key Ergonomic & Accessibility Behavior"],
+        [
+            ["320–599 px (Mobile)", "Single column, bottom nav, sticky action bar", "48px thumb-zone Start/Pause/Finish controls; stacked cards"],
+            ["600–899 px (Tablet)", "Two-column selective grids", "Map primary; point inspector in clean stacked panel"],
+            ["900–1279 px (Laptop)", "Side rail + main map + inspector", "Balanced Recharts distribution & RSSI sequence charts"],
+            [">= 1280 px (Desktop)", "Persistent slim sidebar + expansive map", "Full analyst controls with persistent unit-labeled legend"],
+        ],
+    )
     doc.add_page_break()
 
     # ---------------- CHAPTER 7 ----------------
@@ -675,6 +659,8 @@ if (!hasFineLocation) {
         ],
     )
     add_figure(doc, FIG_DIR / "fig_signal_chart.png", "Figure 7.1: Seeded Apartment Indoor Wi-Fi RSSI by Room.")
+    add_figure(doc, FIG_DIR / "fig_band_comparison.png", "Figure 7.2: 2.4 GHz (Windows Laptop) vs 5 GHz (Android) Propagation by Room.")
+    add_figure(doc, FIG_DIR / "fig_test_breakdown.png", "Figure 7.3: Automated Verification & Build Checks (100% Passing).")
 
     add_heading(doc, "7.2 CyberSecurity Threat & Control Matrix (STRIDE)", level=2)
     add_table(
@@ -751,7 +737,35 @@ if (!hasFineLocation) {
         ],
     )
 
-    add_heading(doc, "APPENDIX B: DEPLOYMENT & LAUNCHER GUIDE", level=1)
+    add_heading(doc, "APPENDIX B: ADDITIONAL SOURCE EXCERPTS", level=1)
+    add_code_block(
+        doc,
+        "Excerpt B.1: services/api/app/schemas.py — Canonical ObservationIn Contract",
+        read_snippet("services/api/app/schemas.py", 96, 145),
+    )
+    add_code_block(
+        doc,
+        "Excerpt B.2: apps/web/src/components/LiveSurveyView.tsx — Floor Plan Normalized Tap Marker",
+        read_snippet("apps/web/src/components/LiveSurveyView.tsx", 125, 165),
+    )
+    add_code_block(
+        doc,
+        "Excerpt B.3: apps/web/src/components/MapExplorerView.tsx — Bounded Heatmap & Point Inspector",
+        read_snippet("apps/web/src/components/MapExplorerView.tsx", 145, 200),
+    )
+    add_code_block(
+        doc,
+        "Excerpt B.4: services/api/app/main.py — FastAPI Lifespan & Static Mounts",
+        read_snippet("services/api/app/main.py", 1, 52),
+    )
+    add_code_block(
+        doc,
+        "Excerpt B.5: apps/windows-collector/tarang_collector/server.py — Hybrid App & Capabilities",
+        read_snippet("apps/windows-collector/tarang_collector/server.py", 170, 235),
+    )
+    doc.add_page_break()
+
+    add_heading(doc, "APPENDIX C: DEPLOYMENT & LAUNCHER GUIDE", level=1)
     add_body(
         doc,
         "1. Laptop Hybrid Mode: Double-click START_TARANG_LAPTOP.bat to start the local collector "
@@ -761,7 +775,7 @@ if (!hasFineLocation) {
         "3. Backend Tests: Run `cd services/api && python -m pytest -v`."
     )
 
-    add_heading(doc, "APPENDIX C: SUBMISSION & VERIFICATION CHECKLIST", level=1)
+    add_heading(doc, "APPENDIX D: SUBMISSION & VERIFICATION CHECKLIST", level=1)
     for chk in [
         "[x] Candidate details (Shivam Kumar, 2105130, BCA CyberSecurity 2024–2027, Graphic Era Deemed to be University) verified.",
         "[x] All 3 pytest tests, TypeScript build, and live Windows WLAN probe verified passing.",
